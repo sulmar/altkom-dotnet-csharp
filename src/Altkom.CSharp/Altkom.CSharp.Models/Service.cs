@@ -6,5 +6,9 @@ namespace Altkom.CSharp.Models
     {
         public TimeSpan Duration { get; set; }
 
+        public override string ToString()
+        {
+            return $"{base.ToString()} {Duration}";
+        }
     }
 }

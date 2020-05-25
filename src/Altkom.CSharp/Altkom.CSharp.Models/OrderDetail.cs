@@ -10,6 +10,7 @@
         {
             this.Id = id;            
             this.Quantity = quantity;
+            this.Item = item;
             this.UnitPrice = unitPrice ?? item.UnitPrice;
         }
     }

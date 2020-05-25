@@ -50,6 +50,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Altkom.CSharp.FakeServices\Altkom.CSharp.FakeServices.csproj">
+      <Project>{BD42FC7E-CEE1-4585-AE18-A156971B0263}</Project>
+      <Name>Altkom.CSharp.FakeServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Altkom.CSharp.IServices\Altkom.CSharp.IServices.csproj">
+      <Project>{2BB79A7E-DBA8-43B1-AD52-68E077595CFA}</Project>
+      <Name>Altkom.CSharp.IServices</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Altkom.CSharp.Models\Altkom.CSharp.Models.csproj">
       <Project>{44AC6BEB-B9B9-4977-A748-54A074E98B3C}</Project>
       <Name>Altkom.CSharp.Models</Name>

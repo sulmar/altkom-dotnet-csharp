@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Altkom.CSharp.Models", "Alt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Altkom.CSharp.ConsoleClient", "Altkom.CSharp.ConsoleClient\Altkom.CSharp.ConsoleClient.csproj", "{F7E3B196-D6C2-47FC-82BF-A0ED73B5ADE8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Altkom.CSharp.IServices", "Altkom.CSharp.IServices\Altkom.CSharp.IServices.csproj", "{2BB79A7E-DBA8-43B1-AD52-68E077595CFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Altkom.CSharp.FakeServices", "Altkom.CSharp.FakeServices\Altkom.CSharp.FakeServices.csproj", "{BD42FC7E-CEE1-4585-AE18-A156971B0263}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{F7E3B196-D6C2-47FC-82BF-A0ED73B5ADE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7E3B196-D6C2-47FC-82BF-A0ED73B5ADE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7E3B196-D6C2-47FC-82BF-A0ED73B5ADE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BB79A7E-DBA8-43B1-AD52-68E077595CFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BB79A7E-DBA8-43B1-AD52-68E077595CFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BB79A7E-DBA8-43B1-AD52-68E077595CFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BB79A7E-DBA8-43B1-AD52-68E077595CFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD42FC7E-CEE1-4585-AE18-A156971B0263}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD42FC7E-CEE1-4585-AE18-A156971B0263}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD42FC7E-CEE1-4585-AE18-A156971B0263}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD42FC7E-CEE1-4585-AE18-A156971B0263}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

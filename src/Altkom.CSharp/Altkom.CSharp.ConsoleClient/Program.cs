@@ -1,4 +1,6 @@
-﻿using Altkom.CSharp.Models;
+﻿using Altkom.CSharp.FakeServices;
+using Altkom.CSharp.IServices;
+using Altkom.CSharp.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,12 +14,50 @@ namespace Altkom.CSharp.ConsoleClient
     {
         static void Main(string[] args)
         {
+            ProductsTest();
+
             // CreateOrder1();
 
-            CreateOrder2();
+            // CreateOrder2();
 
             //ArrayTest();
             //CollectionTest();
+        }
+
+        private static void VarTest()
+        {
+            var x = 10m;
+
+            // x = "Hello World";
+        }
+
+        private static void DynamicTest()
+        {
+            dynamic a = 10;
+
+            a = "Hello World";            
+        }
+    
+        private static void ProductsTest()
+        {
+            ICollection<Product> products = Create();
+
+            IProductService productService = new FakeProductService();
+            productService.AddRange(products);
+
+            var blackProducts = productService.Get("black");
+            
+            foreach (Product product in blackProducts)
+            {
+                Console.WriteLine(product);
+            }
+
+            //var myProducts = productService.Get(10, 50);
+
+            //foreach (Product product in myProducts)
+            //{
+
+            //}
 
         }
 
@@ -35,6 +75,33 @@ namespace Altkom.CSharp.ConsoleClient
             names[1] = "Tomek";
 
             string[] members = new string[] { "Ewa", "Tomek" };
+        }
+
+        private static ICollection<Product> Create()
+        {
+            Product product1 = new Product
+            {
+                Id = 1,
+                Name = "maska",
+                Color = "black",
+                UnitPrice = 9.99m
+            };
+
+            Product product2 = new Product
+            {
+                Id = 2,
+                Name = "Plyn",
+                Color = "Transparentny",
+                UnitPrice = 100m
+            };
+
+            ICollection<Product> products = new List<Product>
+            {
+                product1,
+                product2
+            };
+
+            return products;
         }
 
         private static void CreateOrder2()
@@ -55,6 +122,7 @@ namespace Altkom.CSharp.ConsoleClient
             {
                 Id = 2,
                 Name = "Plyn",
+                Color = "Transparentny",
                 UnitPrice = 100m
             };
 
@@ -83,7 +151,7 @@ namespace Altkom.CSharp.ConsoleClient
             foreach (OrderDetail orderDetail in order.OrderDetails)
             {
                 // snippet: cw
-                Console.WriteLine($"{orderDetail.Item.Name} {orderDetail.Quantity} {orderDetail.UnitPrice}");
+                Console.WriteLine($"{orderDetail.Item} {orderDetail.Quantity} szt. {orderDetail.UnitPrice} PLN");                
             }
         }
 
