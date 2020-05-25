@@ -48,5 +48,17 @@ namespace Altkom.CSharp.Models
         //    return this.firstName;
         //}
 
+        // konstuktor bezparametryczny
+
+        public Customer()
+        {
+        }
+
+        public Customer(string firstname, string lastname)
+        {
+            this.FirstName = firstname;
+            this.LastName = lastname;
+        }
+
     }
 }
