@@ -44,6 +44,8 @@ namespace Altkom.CSharp.FakeServices
 
         public Product Get(int id)
         {
+            return products.SingleOrDefault(product => product.Id == id);
+
             foreach (Product product in products)
             {
                 if (product.Id == id)
@@ -62,6 +64,12 @@ namespace Altkom.CSharp.FakeServices
 
         public IEnumerable<Product> Get(string color)
         {
+            // Linq
+            return products.Where(product => product.Color == color)
+                           .OrderBy(product=>product.Name)
+                           // .Select(product => product)
+                           .ToList();
+
             ICollection<Product> results = new List<Product>();
 
             foreach (Product product in products)

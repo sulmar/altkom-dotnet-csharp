@@ -42,6 +42,10 @@ namespace Altkom.CSharp.ConsoleClient
     {
         static void Main(string[] args)
         {
+            LaserPrinterTest();
+
+            PrinterTest();
+
             DateTime shipDate = DateTime.Today.AddWorkDays(10);
 
             Console.WriteLine(DateTime.Today.ToMyString());
@@ -65,6 +69,89 @@ namespace Altkom.CSharp.ConsoleClient
 
             //ArrayTest();
             //CollectionTest();
+        }
+
+        private static void LaserPrinterTest()
+        {
+            LaserPrinter printer = new LaserPrinter();
+
+            printer.PaperOut += Printer_PaperOut;
+            printer.LowLevel += Printer_LowLevel;
+
+            printer.Log = LogConsole;
+            printer.Log += LogFile;
+            printer.Log += LogFile;
+            printer.Log += LogEmail;
+            // printer.Log += LogToFile;
+
+
+            // metoda anonimowa
+            printer.Log += delegate (string message)
+            {                
+                Console.WriteLine($"send to Facebook {message}");
+            };
+             
+            // R    f <- x + y 
+            //      g <- f(10, 5) + 1
+            
+            printer.Log += message => Console.WriteLine(message);
+
+            printer.CalculateCost += Calculate;
+
+            Printer logPrinter = new Printer();
+            printer.Log += logPrinter.Print;
+
+            printer.Print("5465654344");
+
+            printer.Log -= LogEmail;
+            
+
+            printer.Print("5556667773");
+
+            printer.Log = null;
+
+            printer.Print("8098989895");
+        }
+      
+        private static void Printer_LowLevel(object sender, PrinterEventArgs e)
+        {
+            Console.WriteLine($"Level {e.Level}");
+        }
+
+        private static void Printer_PaperOut()
+        {
+            Console.WriteLine("koniec papieru");
+        }
+
+        private static decimal Calculate(int copies)
+        {
+            return copies * 0.99m;
+        }
+
+        private static void LogToFile(string filename, string message)
+        {
+            System.IO.File.AppendAllText(filename, message);
+        }
+
+        private static void LogFile(string message)
+        {
+            System.IO.File.AppendAllText(@"c:\temp\altkom.log", message);
+        }
+
+        private static void LogConsole(string message)
+        {
+            Console.WriteLine(message);
+        }
+
+        private static void LogEmail(string content)
+        {
+            Console.WriteLine($"Send email {content}");
+        }
+
+        private static void PrinterTest()
+        {
+            Printer printer = new Printer();
+            printer.Print("5465654344");
         }
 
         private static void AddProductTest()
