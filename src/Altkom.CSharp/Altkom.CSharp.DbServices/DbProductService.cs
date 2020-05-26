@@ -4,6 +4,7 @@ using Altkom.CSharp.Models.SearchCriterias;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using Altkom.CSharp.Extensions;
 
 namespace Altkom.CSharp.DbServices
 {
@@ -23,7 +24,17 @@ namespace Altkom.CSharp.DbServices
 
         public void Add(Product entity)
         {
-            throw new NotImplementedException();
+            string sql = "insert into dbo.Products values (@Name, @UnitPrice, @Color, @Weight)";
+
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@Name", entity.Name);
+            command.Parameters.AddWithValue("@UnitPrice", entity.UnitPrice);
+            command.Parameters.AddWithValue("@Color", entity.Color);
+            command.Parameters.AddWithValue("@Weight", entity.Weight);
+
+            connection.Open();
+            command.ExecuteNonQuery();
+            connection.Close();
         }
 
         public void AddRange(IEnumerable<Product> entities)
@@ -33,7 +44,22 @@ namespace Altkom.CSharp.DbServices
 
         public IEnumerable<Product> Get(string color)
         {
-            throw new NotImplementedException();
+            string sql = "select ProductId, Name, UnitPrice, Color, Weight from dbo.Products where Color = @Color";
+
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@Color", color);
+
+            connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Product product = Map(reader);
+
+                yield return product;
+            }
+
+            connection.Close();
         }
 
         public IEnumerable<Product> Get(ProductSearchCriteria searchCriteria)
@@ -49,44 +75,98 @@ namespace Altkom.CSharp.DbServices
             connection.Open();
             SqlDataReader reader = command.ExecuteReader();
 
-            ICollection<Product> products = new List<Product>();
-
             while(reader.Read())
             {
-                Product product = new Product
-                {
-                    Id = reader.GetInt32(0),
-                    Name = reader.GetString(1),
-                    UnitPrice = reader.GetDecimal(2),
-                    Color = reader.GetString(3),
-                    Weight = (float) reader.GetDouble(4),                    
-                    // TODO:
-                    // reader.GetString("Color"),
-                };
+                Product product = Map(reader);
 
-                // reader.GetOrdinal("Color")
-
-                products.Add(product);
+                yield return product;
             }
 
             connection.Close();
+        }
 
-            return products;
+        private static Product Map(SqlDataReader reader)
+        {
+            Product product = new Product
+            {
+                Id = reader.GetInt32("ProductId"),
+                Name = reader.GetString("Name"),
+                UnitPrice = reader.GetDecimal("UnitPrice"),
+                Color = reader.IsDBNull(3) ? null: reader.GetString("Color"),
+                Weight = reader.GetFloat("Weight"),
+            };
+           
+            return product;
+        }
+
+        public int Count()
+        {
+            string sql = "select count(*) from dbo.Products";
+
+            SqlCommand command = new SqlCommand(sql, connection);           
+            connection.Open();
+            
+            int count = (int) command.ExecuteScalar();
+
+            connection.Close();
+
+            return count;
         }
 
         public Product Get(int id)
         {
-            throw new NotImplementedException();
+            string sql = "select ProductId, Name, UnitPrice, Color, Weight from dbo.Products where ProductId = @ProductId";
+
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@ProductId", id);
+            connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
+
+            Product product = null;
+
+            if (reader.Read())
+            {                
+                product = Map(reader);
+            }
+
+            connection.Close();
+
+            return product;
+
         }
 
         public void Remove(int id)
         {
-            throw new NotImplementedException();
+            string sql = "delete from dbo.Products where ProductId = @ProductId";
+
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@ProductId", id);
+
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            connection.Close();
+
+            if (rowsAffected == 0)
+                throw new InvalidOperationException();
         }
 
         public void Update(Product entity)
         {
-            throw new NotImplementedException();
+            string sql = "update dbo.Products set Name=@Name, UnitPrice=@UnitPrice, Color=@Color, Weight=@Weight where ProductId = @ProductId";
+
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@ProductId", entity.Id);
+            command.Parameters.AddWithValue("@Name", entity.Name);
+            command.Parameters.AddWithValue("@UnitPrice", entity.UnitPrice);
+            command.Parameters.AddWithValue("@Color", entity.Color);
+            command.Parameters.AddWithValue("@Weight", entity.Weight);
+
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            connection.Close();
+
+            if (rowsAffected == 0)
+                throw new InvalidOperationException();
         }
     }
 }

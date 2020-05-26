@@ -12,11 +12,50 @@ using System.Threading.Tasks;
 
 namespace Altkom.CSharp.ConsoleClient
 {
+    public class DateTimeHelper
+    {        
+        public static bool IsWeekend(DateTime date)
+        {
+            return date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday;
+        }
+    }
+
+    public static class DateTimeExtensions
+    {
+        // Metoda rozszerzająca (extension method)
+        public static bool IsWeekend(this DateTime date)
+        {
+            return date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday;
+        }
+        public static DateTime AddWorkDays(this DateTime date, int days)
+        {
+            return date.AddDays(days);
+        }
+
+        public static string ToMyString(this DateTime date)
+        {
+            return date.ToShortDateString();
+        }
+    }
+
     class Program
     {
         static void Main(string[] args)
         {
-            GetProductsTest();
+            DateTime shipDate = DateTime.Today.AddWorkDays(10);
+
+            Console.WriteLine(DateTime.Today.ToMyString());
+
+            if (DateTime.Today.IsWeekend())
+            {
+                Console.WriteLine("Weekend!");
+            }
+
+            //AddProductTest();
+
+            GetProductTest();
+
+            //GetProductsTest();
 
             // ProductsTest();
 
@@ -28,12 +67,40 @@ namespace Altkom.CSharp.ConsoleClient
             //CollectionTest();
         }
 
-        private static void GetProductsTest()
+        private static void AddProductTest()
+        {
+            Product product = new Product
+            {
+                Name = "Maska ochronna",
+                Color = "blue",
+                UnitPrice = 25.99m,
+                Weight = 200.5f
+            };
+
+            IProductService productService = CreateProductService();
+            productService.Add(product);
+        }
+
+        private static void GetProductTest()
+        {
+            IProductService productService = CreateProductService();
+            Product product = productService.Get(1);
+            Console.WriteLine(product.Name);
+        }
+
+        private static IProductService CreateProductService()
         {
             string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=MyDb;Integrated Security=True;Application Name=Altkom";
 
             SqlConnection connection = new SqlConnection(connectionString);
             IProductService productService = new DbProductService(connection);
+
+            return productService;
+        }
+
+        private static void GetProductsTest()
+        {
+            IProductService productService = CreateProductService();
 
             IEnumerable<Product> products = productService.Get();
 

@@ -13,6 +13,8 @@ namespace Altkom.CSharp.IServices
 
         // IEnumerable<Product> Get(decimal from, decimal to, string color, float weight);
         IEnumerable<Product> Get(ProductSearchCriteria searchCriteria);
+
+        int Count();
     }
 
 }

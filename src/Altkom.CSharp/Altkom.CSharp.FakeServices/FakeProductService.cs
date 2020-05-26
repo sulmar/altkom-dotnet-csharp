@@ -32,6 +32,11 @@ namespace Altkom.CSharp.FakeServices
             }
         }
 
+        public int Count()
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Product> Get()
         {
             return products;
