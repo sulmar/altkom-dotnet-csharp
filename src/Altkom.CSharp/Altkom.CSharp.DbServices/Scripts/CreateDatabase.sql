@@ -13,4 +13,4 @@ insert into dbo.Products
 		('Plyn dezynfekujacy', 59.99, 'transparent', 1000),
 		('Przylbica', 19.99, 'white', 20)
 
-select * from dbo.Products
+select ProductId, Name, UnitPrice, Color, Weight from dbo.Products

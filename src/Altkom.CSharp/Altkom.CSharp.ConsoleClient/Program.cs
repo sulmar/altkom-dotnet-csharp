@@ -1,6 +1,8 @@
-﻿using Altkom.CSharp.FakeServices;
+﻿using Altkom.CSharp.DbServices;
+using Altkom.CSharp.FakeServices;
 using Altkom.CSharp.IServices;
 using Altkom.CSharp.Models;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,7 +16,9 @@ namespace Altkom.CSharp.ConsoleClient
     {
         static void Main(string[] args)
         {
-            ProductsTest();
+            GetProductsTest();
+
+            // ProductsTest();
 
             // CreateOrder1();
 
@@ -22,6 +26,21 @@ namespace Altkom.CSharp.ConsoleClient
 
             //ArrayTest();
             //CollectionTest();
+        }
+
+        private static void GetProductsTest()
+        {
+            string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=MyDb;Integrated Security=True;Application Name=Altkom";
+
+            SqlConnection connection = new SqlConnection(connectionString);
+            IProductService productService = new DbProductService(connection);
+
+            IEnumerable<Product> products = productService.Get();
+
+            foreach (Product product in products)
+            {
+                Console.WriteLine(product.Name);
+            }
         }
 
         private static void VarTest()

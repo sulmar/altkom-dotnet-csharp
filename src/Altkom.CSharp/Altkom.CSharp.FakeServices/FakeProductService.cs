@@ -6,53 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace Altkom.CSharp.FakeServices
-{
-    public class DbProductService : IProductService
-    {
-        public void Add(Product entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddRange(IEnumerable<Product> entities)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Product> Get(string color)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Product> Get()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Product Get(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Product> Get(ProductSearchCriteria searchCriteria)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Remove(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(Product entity)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
+{  
     public class FakeProductService : IProductService
     {
-        private ICollection<Product> products;
+        private readonly ICollection<Product> products;
+
+        // private const int count = 100;
+        private readonly DateTime startDate = DateTime.Now;
 
         public FakeProductService()
         {            
