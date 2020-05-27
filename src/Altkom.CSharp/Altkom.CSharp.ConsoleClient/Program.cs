@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Altkom.CSharp.ConsoleClient
@@ -41,19 +42,45 @@ namespace Altkom.CSharp.ConsoleClient
 
     class Program
     {
-        static void Main(string[] args)
+        // C# <=7.0
+        static void Main(string[] args) => MainAsync(args).GetAwaiter().GetResult();
+
+        // C# > 7.1
+        /// static async Task Main(string[] args)
+
+        static async Task MainAsync(string[] args)
         {
+            Console.WriteLine($"#{Thread.CurrentThread.ManagedThreadId} Starting...");
+
+            // TaskSendTest();
+            // CalculateTaxTest();
+
+            // Task<decimal> result = CalculateTaxAsyncAwaitTest();
+
+            // decimal result = await CalculateTaxAsyncAwaitTest();
+
+            CalculateTaxAsyncAwaitTest();
+
+
+            // Task.Run(()=>CalculateTaxAsyncAwaitTest());
+
+            Console.WriteLine($"#{Thread.CurrentThread.ManagedThreadId} Done.");
+
+            Console.WriteLine("Press any key to exit.");
+            Console.ReadKey();
+
+            #region 
             //LaserPrinterTest();
 
             //PrinterTest();
 
             // ExtensionMethodTest();
 
-            AddProductTest();
+            //AddProductTest();
 
-            GetProductTest();
+            //GetProductTest();
 
-            GetProductsTest();
+            //GetProductsTest();
 
             // ProductsTest();
 
@@ -63,6 +90,79 @@ namespace Altkom.CSharp.ConsoleClient
 
             //ArrayTest();
             //CollectionTest();
+            #endregion
+        }
+
+        private static void ThreadSendTest()
+        {
+            Thread thread = new Thread(SyncTest);
+            thread.Start();
+        }
+
+        private static void TaskSendTest()
+        {
+            //Task task = new Task(() => SyncTest());
+            //task.Start();
+
+            Task.Run(() => SyncTest());
+        }
+
+        private static void CalculateTaxSyncTest()
+        {
+            decimal amount1 = CalculateTax(100);
+            decimal amount2 = CalculateTax(100);
+            decimal total = amount1 + amount2;
+            Console.WriteLine($"{total}");
+        }
+
+        private static void CalculateTaxTest()
+        {
+           CalculateTaxAsync(100)
+                .ContinueWith(t => Console.WriteLine($"{t.Result}"));
+        }
+
+        private static void CalculateTaxParaller()
+        {
+            Task<decimal> t1 = CalculateTaxAsync(100);
+            Task<decimal> t2 = CalculateTaxAsync(300);
+
+            Task.WaitAll(t1, t2);
+
+            decimal total = t1.Result + t2.Result;
+        }
+
+        private static async Task<decimal> CalculateTaxAsyncAwaitTest()
+        {
+            decimal amount1 = await CalculateTaxAsync(100);
+            decimal amount2 = await CalculateTaxAsync(300);
+
+            decimal total = amount1 + amount2;
+
+            Console.WriteLine($"result: {total}");
+
+            return total;
+        }
+
+        private static Task<decimal> CalculateTaxAsync(decimal amount)
+        {
+            return Task.Run(() => CalculateTax(amount));
+        }
+
+        private static decimal CalculateTax(decimal amount)
+        {
+            Console.WriteLine($"Calculating...");
+
+            Thread.Sleep(TimeSpan.FromSeconds(5));
+
+            Console.WriteLine($"Calculated.");
+
+            return amount * 1.23m;
+        }
+
+        private static void SyncTest()
+        {
+            Sender sender = new Sender();
+            sender.Send("Hello World!");
         }
 
         private static void ExtensionMethodTest()
