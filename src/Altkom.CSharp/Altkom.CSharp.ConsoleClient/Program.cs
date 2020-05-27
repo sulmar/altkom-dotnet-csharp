@@ -1,4 +1,5 @@
 ﻿using Altkom.CSharp.DbServices;
+using Altkom.CSharp.EFServices;
 using Altkom.CSharp.FakeServices;
 using Altkom.CSharp.IServices;
 using Altkom.CSharp.Models;
@@ -42,24 +43,17 @@ namespace Altkom.CSharp.ConsoleClient
     {
         static void Main(string[] args)
         {
-            LaserPrinterTest();
+            //LaserPrinterTest();
 
-            PrinterTest();
+            //PrinterTest();
 
-            DateTime shipDate = DateTime.Today.AddWorkDays(10);
+            // ExtensionMethodTest();
 
-            Console.WriteLine(DateTime.Today.ToMyString());
-
-            if (DateTime.Today.IsWeekend())
-            {
-                Console.WriteLine("Weekend!");
-            }
-
-            //AddProductTest();
+            AddProductTest();
 
             GetProductTest();
 
-            //GetProductsTest();
+            GetProductsTest();
 
             // ProductsTest();
 
@@ -69,6 +63,18 @@ namespace Altkom.CSharp.ConsoleClient
 
             //ArrayTest();
             //CollectionTest();
+        }
+
+        private static void ExtensionMethodTest()
+        {
+            DateTime shipDate = DateTime.Today.AddWorkDays(10);
+
+            Console.WriteLine(DateTime.Today.ToMyString());
+
+            if (DateTime.Today.IsWeekend())
+            {
+                Console.WriteLine("Weekend!");
+            }
         }
 
         private static void LaserPrinterTest()
@@ -154,6 +160,8 @@ namespace Altkom.CSharp.ConsoleClient
             printer.Print("5465654344");
         }
 
+       
+
         private static void AddProductTest()
         {
             Product product = new Product
@@ -164,18 +172,30 @@ namespace Altkom.CSharp.ConsoleClient
                 Weight = 200.5f
             };
 
-            IProductService productService = CreateProductService();
+            IProductService productService = CreateEFProductService();
             productService.Add(product);
         }
 
         private static void GetProductTest()
         {
-            IProductService productService = CreateProductService();
+            IProductService productService = CreateEFProductService();
             Product product = productService.Get(1);
             Console.WriteLine(product.Name);
         }
 
-        private static IProductService CreateProductService()
+        private static IProductService CreateEFProductService()
+        {
+            string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=MyEFDb;Integrated Security=True;Application Name=Altkom";
+
+            // MyContext context = new MyContext();
+
+            MyContext context = new MyContext(connectionString);
+            IProductService productService = new EFProductService(context);
+
+            return productService;
+        }
+
+        private static IProductService CreateDbProductService()
         {
             string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=MyDb;Integrated Security=True;Application Name=Altkom";
 
@@ -187,7 +207,7 @@ namespace Altkom.CSharp.ConsoleClient
 
         private static void GetProductsTest()
         {
-            IProductService productService = CreateProductService();
+            IProductService productService = CreateEFProductService();
 
             IEnumerable<Product> products = productService.Get();
 

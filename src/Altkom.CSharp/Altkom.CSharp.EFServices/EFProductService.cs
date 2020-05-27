@@ -7,13 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using System.Diagnostics;
 
 namespace Altkom.CSharp.EFServices
 {
     public class EFProductService : IProductService
     {
         private readonly MyContext context;
-
 
         public EFProductService(MyContext context)
         {
@@ -22,8 +22,29 @@ namespace Altkom.CSharp.EFServices
 
         public void Add(Product entity)
         {
+            var entities = context.ChangeTracker.Entries();
+
+            context.Entry(entity).State = EntityState.Unchanged;
+
+            Debug.WriteLine(context.Entry(entity).State);
+
             context.Items.Add(entity);
+
+            Debug.WriteLine(context.Entry(entity).State);
+
             context.SaveChanges();
+
+            Debug.WriteLine(context.Entry(entity).State);
+
+            entity.Color = "purple";
+
+            Debug.WriteLine(context.Entry(entity).State);
+
+            context.SaveChanges();
+
+            Debug.WriteLine(context.Entry(entity).State);
+
+
         }
 
         public void AddRange(IEnumerable<Product> entities)
@@ -43,14 +64,43 @@ namespace Altkom.CSharp.EFServices
         {
             return products
                 .Where(p => p.Color == color)
-                .OrderBy(p=>p.Name)
+                .OrderBy(p => p.Name)
                 .ToList();
         }
 
         public IEnumerable<Product> Get(ProductSearchCriteria searchCriteria)
         {
-            throw new NotImplementedException();
+            IQueryable<Product> query = products.AsQueryable();
+
+            if (searchCriteria.FromUnitPrice.HasValue)
+            {
+                query = query.Where(p => p.UnitPrice >= searchCriteria.FromUnitPrice);
+            }
+
+            if (searchCriteria.ToUnitPrice.HasValue)
+            {
+                query = query.Where(p => p.UnitPrice <= searchCriteria.ToUnitPrice);
+            }
+
+            if (searchCriteria.FromWeight.HasValue)
+            {
+                query = query.Where(p => p.Weight >= searchCriteria.FromWeight);
+            }
+
+            if (searchCriteria.ToWeight.HasValue)
+            {
+                query = query.Where(p => p.Weight <= searchCriteria.ToWeight);
+            }
+
+            if (!string.IsNullOrEmpty(searchCriteria.Color))
+            {
+                query = query.Where(p => p.Color == searchCriteria.Color);
+            }
+
+            return query.ToList();
+
         }
+
 
         public IEnumerable<Product> Get()
         {

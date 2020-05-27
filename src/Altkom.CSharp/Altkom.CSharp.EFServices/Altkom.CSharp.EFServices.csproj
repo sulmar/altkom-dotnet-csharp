@@ -51,6 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configurations\CustomerConfiguration.cs" />
+    <Compile Include="Configurations\OrderConfiguration.cs" />
+    <Compile Include="Configurations\ProductConfiguration.cs" />
     <Compile Include="EFProductService.cs" />
     <Compile Include="MyContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

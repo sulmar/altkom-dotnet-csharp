@@ -6,7 +6,7 @@ namespace Altkom.CSharp.Models
     {
         // backfield
         private string firstName;
-
+        
         public string FirstName
         {
             set

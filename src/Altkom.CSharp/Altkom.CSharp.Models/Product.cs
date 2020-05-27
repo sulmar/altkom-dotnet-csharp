@@ -6,6 +6,7 @@ namespace Altkom.CSharp.Models
     {
         public string Color { get; set; }
         public float Weight { get; set; }
+        public string BarCode { get; set; }
 
         public object Clone()
         {

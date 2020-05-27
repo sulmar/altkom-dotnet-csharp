@@ -101,6 +101,10 @@
       <Project>{D49A9282-B6D0-41C3-88B7-46A10F0E4D13}</Project>
       <Name>Altkom.CSharp.DbServices</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Altkom.CSharp.EFServices\Altkom.CSharp.EFServices.csproj">
+      <Project>{521C6476-9127-4B6C-A967-9327AE1FFF81}</Project>
+      <Name>Altkom.CSharp.EFServices</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Altkom.CSharp.FakeServices\Altkom.CSharp.FakeServices.csproj">
       <Project>{BD42FC7E-CEE1-4585-AE18-A156971B0263}</Project>
       <Name>Altkom.CSharp.FakeServices</Name>
