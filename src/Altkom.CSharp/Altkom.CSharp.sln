@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Altkom.CSharp.FakeServices"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Altkom.CSharp.DbServices", "Altkom.CSharp.DbServices\Altkom.CSharp.DbServices.csproj", "{D49A9282-B6D0-41C3-88B7-46A10F0E4D13}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Altkom.CSharp.EFServices", "Altkom.CSharp.EFServices\Altkom.CSharp.EFServices.csproj", "{521C6476-9127-4B6C-A967-9327AE1FFF81}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{D49A9282-B6D0-41C3-88B7-46A10F0E4D13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D49A9282-B6D0-41C3-88B7-46A10F0E4D13}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D49A9282-B6D0-41C3-88B7-46A10F0E4D13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{521C6476-9127-4B6C-A967-9327AE1FFF81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{521C6476-9127-4B6C-A967-9327AE1FFF81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{521C6476-9127-4B6C-A967-9327AE1FFF81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{521C6476-9127-4B6C-A967-9327AE1FFF81}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
