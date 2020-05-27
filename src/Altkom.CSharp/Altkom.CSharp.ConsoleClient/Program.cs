@@ -1,13 +1,17 @@
-﻿using Altkom.CSharp.DbServices;
+﻿using Altkom.CSharp.ConsoleClient.AltkomWCFService;
+using Altkom.CSharp.DbServices;
 using Altkom.CSharp.EFServices;
 using Altkom.CSharp.FakeServices;
 using Altkom.CSharp.IServices;
 using Altkom.CSharp.Models;
 using Microsoft.Data.SqlClient;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
+using System.ServiceModel;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -50,6 +54,10 @@ namespace Altkom.CSharp.ConsoleClient
 
         static async Task MainAsync(string[] args)
         {
+            WCFClientTest();
+
+            SOAPClientTest();
+
             Console.WriteLine($"#{Thread.CurrentThread.ManagedThreadId} Starting...");
 
             // TaskSendTest();
@@ -91,6 +99,54 @@ namespace Altkom.CSharp.ConsoleClient
             //ArrayTest();
             //CollectionTest();
             #endregion
+        }
+
+        private static async void RestApiClientTest()
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:54015");
+            
+            HttpResponseMessage response = await client.GetAsync("api/products");
+
+            if (response.IsSuccessStatusCode)
+            {
+                string content = await response.Content.ReadAsStringAsync();
+
+                IEnumerable<Product> products = JsonConvert.DeserializeObject<IEnumerable<Product>>(content);
+            }
+        }
+
+        private static void WCFClientChannelFactoryTest()
+        {
+            BasicHttpBinding binding = new BasicHttpBinding();
+            EndpointAddress endpoint = new EndpointAddress("http://localhost:54015/MyService");
+
+            ChannelFactory<IMyService> proxy = new ChannelFactory<IMyService>(binding, endpoint);
+            IMyService client = proxy.CreateChannel();
+
+            int result = client.Add(10, 5);
+
+        }
+
+        private static void WCFClientTest()
+        {
+            AltkomWCFService.MyServiceClient client = new AltkomWCFService.MyServiceClient();
+            int result = client.Add(10, 5);
+        }
+
+        private static void SOAPClientTest()
+        {
+            ServiceAltkom.MyService service = new ServiceAltkom.MyService();
+            int result = service.Add(10, 5);
+
+            ServiceAltkom.Product[] products =  service.GetProducts();
+
+            foreach (var product in products)
+            {
+                Console.WriteLine(product.Name);
+            }
+
+            
         }
 
         private static void ThreadSendTest()

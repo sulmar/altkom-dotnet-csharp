@@ -2,6 +2,7 @@
 
 namespace Altkom.CSharp.Models
 {
+   
     public class Product : Item, ICloneable
     {
         public string Color { get; set; }

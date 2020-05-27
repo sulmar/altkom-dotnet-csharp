@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Altkom.CSharp.Models", "Altkom.CSharp.Models\Altkom.CSharp.Models.csproj", "{44AC6BEB-B9B9-4977-A748-54A074E98B3C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Altkom.CSharp.ConsoleClient", "Altkom.CSharp.ConsoleClient\Altkom.CSharp.ConsoleClient.csproj", "{F7E3B196-D6C2-47FC-82BF-A0ED73B5ADE8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C4160C40-4B7B-4692-8094-A104E21B7815} = {C4160C40-4B7B-4692-8094-A104E21B7815}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Altkom.CSharp.IServices", "Altkom.CSharp.IServices\Altkom.CSharp.IServices.csproj", "{2BB79A7E-DBA8-43B1-AD52-68E077595CFA}"
 EndProject
@@ -14,6 +17,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Altkom.CSharp.DbServices", "Altkom.CSharp.DbServices\Altkom.CSharp.DbServices.csproj", "{D49A9282-B6D0-41C3-88B7-46A10F0E4D13}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Altkom.CSharp.EFServices", "Altkom.CSharp.EFServices\Altkom.CSharp.EFServices.csproj", "{521C6476-9127-4B6C-A967-9327AE1FFF81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Altkom.CSharp.SOAPService", "Altkom.CSharp.SOAPService\Altkom.CSharp.SOAPService.csproj", "{C80141BF-A513-4B51-9BAA-14D2D565629D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Altkom.CSharp.WCFService", "Altkom.CSharp.WCFService\Altkom.CSharp.WCFService.csproj", "{C4160C40-4B7B-4692-8094-A104E21B7815}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Altkom.CSharp.WebApiService", "Altkom.CSharp.WebApiService\Altkom.CSharp.WebApiService.csproj", "{175BE618-5134-43B4-8870-6DD90D215F12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +54,18 @@ Global
 		{521C6476-9127-4B6C-A967-9327AE1FFF81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{521C6476-9127-4B6C-A967-9327AE1FFF81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{521C6476-9127-4B6C-A967-9327AE1FFF81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C80141BF-A513-4B51-9BAA-14D2D565629D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C80141BF-A513-4B51-9BAA-14D2D565629D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C80141BF-A513-4B51-9BAA-14D2D565629D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C80141BF-A513-4B51-9BAA-14D2D565629D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4160C40-4B7B-4692-8094-A104E21B7815}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4160C40-4B7B-4692-8094-A104E21B7815}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4160C40-4B7B-4692-8094-A104E21B7815}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4160C40-4B7B-4692-8094-A104E21B7815}.Release|Any CPU.Build.0 = Release|Any CPU
+		{175BE618-5134-43B4-8870-6DD90D215F12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{175BE618-5134-43B4-8870-6DD90D215F12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{175BE618-5134-43B4-8870-6DD90D215F12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{175BE618-5134-43B4-8870-6DD90D215F12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
